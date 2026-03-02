@@ -1,0 +1,1 @@
+ALTER TABLE `surveys` ADD COLUMN `evaluator` VARCHAR(255) NULL;

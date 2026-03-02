@@ -1,0 +1,58 @@
+name: Build & Push Docker images
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+env:
+  REGISTRY: 89kjdkg8.c1.de1.container-registry.ovh.net
+  PROJECT: enquetes-train
+
+jobs:
+  build-backend:
+    name: Build backend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login to Harbor registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.REGISTRY_LOGIN }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - name: Build & push backend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.PROJECT }}/backend:latest
+            ${{ env.REGISTRY }}/${{ env.PROJECT }}/backend:${{ github.sha }}
+
+  build-frontend:
+    name: Build frontend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login to Harbor registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.REGISTRY_LOGIN }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - name: Build & push frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.PROJECT }}/frontend:latest
+            ${{ env.REGISTRY }}/${{ env.PROJECT }}/frontend:${{ github.sha }}

@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Masquer la scrollbar pour la navigation par onglets */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Éviter le double-tap zoom sur les boutons */
+button, a {
+  touch-action: manipulation;
+}
+
+/* Zone sécurisée iPhone (notch, barre d'accueil) */
+body {
+  padding-bottom: env(safe-area-inset-bottom);
+}

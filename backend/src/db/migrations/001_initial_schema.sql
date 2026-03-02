@@ -1,0 +1,50 @@
+CREATE TABLE IF NOT EXISTS `groups` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `name` VARCHAR(255) NOT NULL,
+  `sort_order` INT NOT NULL DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS `criteria` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `group_id` INT NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `description` TEXT,
+  `roles` VARCHAR(20) NOT NULL DEFAULT 'TOUS',
+  `sort_order` INT NOT NULL DEFAULT 0,
+  FOREIGN KEY (`group_id`) REFERENCES `groups`(`id`) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `teams` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `name` VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `collaborators` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `team_id` INT NOT NULL,
+  `first_name` VARCHAR(255) NOT NULL,
+  `last_name` VARCHAR(255) NOT NULL,
+  FOREIGN KEY (`team_id`) REFERENCES `teams`(`id`) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `surveys` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `reference` VARCHAR(255),
+  `date` DATE NOT NULL,
+  `collaborator_id` INT NOT NULL,
+  `role` ENUM('TITULAIRE', 'AGENT_B', 'RENFORT', 'EA') NOT NULL,
+  `status` ENUM('EN_COURS', 'FINALISEE') NOT NULL DEFAULT 'EN_COURS',
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (`collaborator_id`) REFERENCES `collaborators`(`id`)
+);
+
+CREATE TABLE IF NOT EXISTS `survey_evaluations` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `survey_id` INT NOT NULL,
+  `criteria_id` INT NOT NULL,
+  `value` ENUM('NON_EVALUE', 'CONFORME', 'PARTIEL', 'NON_CONFORME') NOT NULL DEFAULT 'NON_EVALUE',
+  UNIQUE KEY `uq_survey_criteria` (`survey_id`, `criteria_id`),
+  FOREIGN KEY (`survey_id`) REFERENCES `surveys`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`criteria_id`) REFERENCES `criteria`(`id`)
+);

@@ -1,0 +1,1 @@
+ALTER TABLE `teams` ADD COLUMN `manager` VARCHAR(255) NULL;
