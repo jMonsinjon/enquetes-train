@@ -12,6 +12,9 @@ RUN npm run build
 # Stage 2 : serveur nginx
 FROM nginx:alpine
 
+# Seule BACKEND_SERVICE_URL est substituée — les variables nginx ($uri, $remote_addr…) sont préservées
+ENV NGINX_ENVSUBST_TEMPLATE_VARS=BACKEND_SERVICE_URL
+
 # Copie les fichiers buildés
 COPY --from=builder /app/dist /usr/share/nginx/html
 
