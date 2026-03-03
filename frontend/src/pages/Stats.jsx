@@ -181,7 +181,7 @@ export default function Stats() {
             <option value="">— Choisir —</option>
             {collaborators.map((c) => (
               <option key={c.id} value={c.id}>
-                {c.name}
+                {c.first_name} {c.last_name}
               </option>
             ))}
           </select>
