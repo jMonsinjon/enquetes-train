@@ -1,11 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { ClipboardList, CheckSquare, Users } from 'lucide-react';
+import { ClipboardList, CheckSquare, Users, BarChart2 } from 'lucide-react';
 
 const navItems = [
   { to: '/', icon: ClipboardList, label: 'Enquêtes', end: true },
   { to: '/admin/criteria', icon: CheckSquare, label: 'Critères', end: false },
   { to: '/admin/collaborators', icon: Users, label: 'Équipes', end: false },
+  { to: '/stats', icon: BarChart2, label: 'Stats', end: false },
 ];
 
 export default function BottomNav() {

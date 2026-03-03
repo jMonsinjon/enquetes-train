@@ -6,6 +6,7 @@ import SurveyForm from './pages/SurveyForm.jsx';
 import SurveyEvaluation from './pages/SurveyEvaluation.jsx';
 import CriteriaAdmin from './pages/admin/CriteriaAdmin.jsx';
 import CollaboratorsAdmin from './pages/admin/CollaboratorsAdmin.jsx';
+import Stats from './pages/Stats.jsx';
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="surveys/:id/evaluate" element={<SurveyEvaluation />} />
           <Route path="admin/criteria" element={<CriteriaAdmin />} />
           <Route path="admin/collaborators" element={<CollaboratorsAdmin />} />
+          <Route path="stats" element={<Stats />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

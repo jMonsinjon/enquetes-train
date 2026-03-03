@@ -7,6 +7,7 @@ const criteriaRouter = require('./routes/criteria');
 const teamsRouter = require('./routes/teams');
 const collaboratorsRouter = require('./routes/collaborators');
 const surveysRouter = require('./routes/surveys');
+const statsRouter = require('./routes/stats');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -19,6 +20,7 @@ app.use('/api/criteria', criteriaRouter);
 app.use('/api/teams', teamsRouter);
 app.use('/api/collaborators', collaboratorsRouter);
 app.use('/api/surveys', surveysRouter);
+app.use('/api/stats', statsRouter);
 
 async function waitForDatabase(retries = 15, delayMs = 3000) {
   for (let i = 0; i < retries; i++) {

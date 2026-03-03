@@ -49,4 +49,8 @@ export const api = {
   deleteSurvey: (id) => request('DELETE', `/surveys/${id}`),
   updateEvaluation: (surveyId, evaluationId, payload) =>
     request('PATCH', `/surveys/${surveyId}/evaluations/${evaluationId}`, payload),
+
+  // Statistiques
+  getTopCriteria: () => request('GET', '/stats/top-criteria'),
+  getCollaboratorStats: (id) => request('GET', `/stats/collaborator/${id}`),
 };
